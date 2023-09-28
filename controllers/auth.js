@@ -1,6 +1,7 @@
 import { query } from "../database/connection.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import 'dotenv/config'
 
 const auth = async (req,res) => {
     try {
@@ -41,7 +42,7 @@ const login = async (req, res) => {
 
         const isMatch = await bcrypt.compare(reqBody.password, userData.password)
 
-        const token = jwt.sign({id: userData.id}, "SECRET-KEY-I-PUT-MYSELF")
+        const token = jwt.sign({id: userData.id}, process.env.JWT_SECRET_KEY)
 
         //  compare password
         if (isMatch) {
